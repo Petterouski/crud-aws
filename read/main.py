@@ -11,7 +11,7 @@ def get_db_connection():
         user=os.getenv("DB_USER"),
         password=os.getenv("DB_PASS")
     )
-#prueba 2.0 workflow SSM Aent
+#prueba 2.2 workflow SSM Agent
 @app.route("/users", methods=["GET"])
 def get_users():
     conn = get_db_connection()
