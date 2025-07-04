@@ -1,4 +1,4 @@
-name: Deploy Read Microservice to AWS EC2
+name: Deploy Read Microservice to AWS EC2 with SSM
 
 on:
   push:
@@ -24,14 +24,11 @@ jobs:
       - name: Push Docker image
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/read-service
 
-      - name: SSH into EC2 and deploy container
-        uses: appleboy/ssh-action@v0.1.7
+      - name: Run SSM Command on EC2
+        uses: aws-actions/amazon-ssm-run-command@v1
         with:
-          host: ${{ secrets.EC2_READ_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          port: 22
-          script: |
+          instance-ids: ${{ secrets.EC2_INSTANCE_ID }}
+          commands: |
             docker stop read-service || true
             docker rm read-service || true
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/read-service
