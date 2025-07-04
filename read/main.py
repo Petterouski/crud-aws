@@ -11,7 +11,7 @@ def get_db_connection():
         user=os.getenv("DB_USER"),
         password=os.getenv("DB_PASS")
     )
-#prueba 1.1 workflow
+#prueba 1.2 workflow
 @app.route("/users", methods=["GET"])
 def get_users():
     conn = get_db_connection()
